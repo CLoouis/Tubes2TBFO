@@ -10,7 +10,7 @@ Version : 14 - 11 -2018
 #include "stackchar.h"
 #include "boolean.h"
 
-typedef char masukan[100];
+typedef char masukan[1005];
 //tipe data inputan (string)
 
 typedef struct {

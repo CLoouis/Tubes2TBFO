@@ -1,58 +1,58 @@
 #include <stdio.h>
-#include "stack.h"
+#include "Stack.h"
 
 
 /* ************ Prototype ************ */
 /* *** Konstruktor/Kreator *** */
-void CreateEmpty (Stack *S)
+void CreateEmptyst (Stackt *S)
 /* I.S. sembarang; */
-/* F.S. Membuat sebuah stack S yang kosong berkapasitas MaxEl */
-/* jadi indeksnya antara 1.. MaxEl+1 karena 0 tidak dipakai */
-/* Ciri stack kosong : TOP bernilai Nil */
+/* F.S. Membuat sebuah Stackt S yang kosong berkapasitas MaxEll */
+/* jadi indeksnya antara 1.. MaxEll+1 karena 0 tidak dipakai */
+/* Ciri Stackt kosong : TOP berNillai Nill */
 {
-	Top(*S) = Nil;
+	Top(*S) = Nill;
 }
 
 /* ************ Predikat Untuk test keadaan KOLEKSI ************ */
-bool IsEmpty (Stack S)
-/* Mengirim true jika Stack kosong: lihat definisi di atas */
+bool IsEmptyst (Stackt S)
+/* Mengirim true jika Stackt kosong: lihat definisi di atas */
 {
-	return (Top(S) == Nil);
+	return (Top(S) == Nill);
 }
 
-bool IsFull (Stack S)
-/* Mengirim true jika tabel penampung nilai elemen stack penuh */
+bool isFull (Stackt S)
+/* Mengirim true jika tabel penampung Nillai elemen Stackt penuh */
 {
-	return (Top(S) == MaxEl);
+	return (Top(S) == MaxEll);
 }
 
-/* ************ Menambahkan sebuah elemen ke Stack ************ */
-void Push (Stack * S, infotype X)
-/* Menambahkan X sebagai elemen Stack S. */
-/* I.S. S mungkin kosong, tabel penampung elemen stack TIDAK penuh */
+/* ************ Menambahkan sebuah elemen ke Stackt ************ */
+void Pushst (Stackt * S, Infotype X)
+/* Menambahkan X sebagai elemen Stackt S. */
+/* I.S. S mungkin kosong, tabel penampung elemen Stackt TIDAK penuh */
 /* F.S. X menjadi TOP yang baru,TOP bertambah 1 */
 {
 	Top(*S)++;
 	InfoTop(*S) = X;
 }
 
-/* ************ Menghapus sebuah elemen Stack ************ */
-void Pop (Stack * S, infotype* X)
-/* Menghapus X dari Stack S. */
+/* ************ Menghapus sebuah elemen Stackt ************ */
+void Popst (Stackt * S, Infotype* X)
+/* Menghapus X dari Stackt S. */
 /* I.S. S  tidak mungkin kosong */
-/* F.S. X adalah nilai elemen TOP yang lama, TOP berkurang 1 */
+/* F.S. X adalah Nillai elemen TOP yang lama, TOP berkurang 1 */
 {
 	*X = InfoTop(*S);
 	Top(*S)--;
 }
 
-Stack Reverse(Stack S){
-	Stack res;
-	CreateEmpty(&res);
-	while (!IsEmpty(S)){
-		infotype top;
-		Pop(&S, &top);
-		Push(&res, top);
+Stackt Reverse(Stackt S){
+	Stackt res;
+	CreateEmptyst(&res);
+	while (!IsEmptyst(S)){
+		Infotype top;
+		Popst(&S, &top);
+		Pushst(&res, top);
 	}
 	return res;
 }
