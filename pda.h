@@ -7,7 +7,7 @@ Version : 14 - 11 -2018
 
 #include <stdio.h>
 #include <string.h>
-#include "stackt.h"
+#include "stackchar.h"
 #include "boolean.h"
 
 typedef char masukan[100];
@@ -29,5 +29,5 @@ void transisi (State *Q, char input);
 //Merubah kondisi state Q (nomor dan stack) jika menerima masukan input
 
 boolean validasi (masukan s);
-//Mengembalikan true jika input dari user valid dan false jika input dari user tidak valid 
+//Mengembalikan true jika input dari user valid dan false jika input dari user tidak valid
 #endif

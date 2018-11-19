@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "stackt.h"
+#include "stackchar.h"
 #include "boolean.h"
 #include "pda.h"
 

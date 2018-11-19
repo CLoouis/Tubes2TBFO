@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include "stackt.h"
+#include "stackchar.h"
 #include "boolean.h"
 #include "pda.h"
 
@@ -31,6 +31,14 @@ void transisi (State *Q, char input){
                 Posisi(*Q) = 2;
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 2;
+            } else {
+                Posisi(*Q) = 5;
+            }
+        } else if (input == '.'){
+            if (InfoTop(Stack(*Q)) == 'X'){
+                Posisi(*Q) = 4;
+            } else if (InfoTop(Stack(*Q)) == 'Z'){
+                Posisi(*Q) = 4;
             } else {
                 Posisi(*Q) = 5;
             }
@@ -129,7 +137,14 @@ void transisi (State *Q, char input){
             } else {
                 Posisi(*Q) = 5;
             }
-
+        } else if (input == '.') {
+            if (InfoTop(Stack(*Q)) == 'X'){
+                Posisi(*Q) = 4;
+            } else if (InfoTop(Stack(*Q)) == 'Z'){
+                Posisi(*Q) = 4;
+            } else {
+                Posisi(*Q) = 5;
+            }
         } else {
             Posisi(*Q) = 5;
         }
