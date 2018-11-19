@@ -7,3 +7,16 @@ Bila ekspresi tersebut valid, program akan menghitung nilai dari ekspresi terseb
 dahulu setiap simbol terminal (angka) menjadi nilai numerik yang bersesuaian. Program juga harus dapat mengenali
 apakah ekspresi tersebut mungkin dihitung atau tidak (math error).
 
+## How to run
+
+Windows user:
+```
+user> gcc -std=c11 -o gcc -std=c11 -o main main.c stack.c mesintoken.c pda.c stackchar.c
+user> main
+```
+
+Linux user:
+```
+$ gcc -std=c11 -o gcc -std=c11 -o main main.c stack.c mesintoken.c pda.c stackchar.c
+$ ./main
+```
