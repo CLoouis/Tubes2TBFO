@@ -14,7 +14,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'X'){
                 Push(&Stack(*Q),'X');
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input == '-'){
@@ -23,7 +23,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'X'){
                 Posisi(*Q) = 1; //Pindah ke state 1
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input=='0'||input=='1'||input == '2'||input=='3'||input=='4'||input=='5'||input=='6'||input=='7'||input=='8'||input=='9') {
@@ -32,7 +32,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 2;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
         } else if (input == '.'){
             if (InfoTop(Stack(*Q)) == 'X'){
@@ -40,10 +40,18 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 4;
             } else {
+                Posisi(*Q) = 6;
+            }
+        } else if (input == 'i'){
+            if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 5;
+            } else if (InfoTop(Stack(*Q))=='X'){
+                Posisi(*Q) = 5;
+            } else {
+                Posisi(*Q) = 6;
             }
         } else {
-            Posisi(*Q) = 5;
+            Posisi(*Q) = 6;
         }
 
     } else if (Posisi(*Q) == 1){
@@ -53,7 +61,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 2;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input == '('){
@@ -64,10 +72,10 @@ void transisi (State *Q, char input){
                 Posisi(*Q) = 0;
                 Push(&Stack(*Q),'X');
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
         } else {
-            Posisi(*Q) = 5;
+            Posisi(*Q) = 6;
         }
 
     } else if (Posisi(*Q) == 2){
@@ -77,7 +85,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 //do nothing
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input=='.'){
@@ -86,14 +94,14 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 4;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input==')'){
             if(InfoTop(Stack(*Q)) == 'X'){
                 Pop(&Stack(*Q),&C);
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input=='+'||input=='-'||input=='*'||input=='/'||input=='^'){
@@ -102,11 +110,16 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 3;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
-
+        } else if (input == 'i'){
+            if (InfoTop(Stack(*Q)) == 'X' || InfoTop(Stack(*Q)) == 'Z'){
+                Posisi(*Q) = 5;
+            } else {
+                Posisi(*Q) = 6;
+            }
         } else {
-            Posisi(*Q) = 5;
+            Posisi(*Q) = 6;
         }
 
     } else if (Posisi(*Q) == 3){
@@ -116,7 +129,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 2;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input == '('){
@@ -127,7 +140,7 @@ void transisi (State *Q, char input){
                 Push(&Stack(*Q),'X');
                 Posisi(*Q) = 0;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
         } else if (input == '-'){
             if (InfoTop(Stack(*Q)) == 'X'){
@@ -135,7 +148,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 1;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
         } else if (input == '.') {
             if (InfoTop(Stack(*Q)) == 'X'){
@@ -143,10 +156,16 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 4;
             } else {
+                Posisi(*Q) = 6;
+            }
+        } else if (input == 'i'){
+            if (InfoTop(Stack(*Q)) == 'X' || InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 5;
+            } else {
+                Posisi(*Q) = 6;
             }
         } else {
-            Posisi(*Q) = 5;
+            Posisi(*Q) = 6;
         }
 
     } else if (Posisi(*Q) == 4){
@@ -156,7 +175,7 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 //do nothing
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input=='+'||input=='-'||input=='*'||input=='/'||input=='^'){
@@ -165,18 +184,42 @@ void transisi (State *Q, char input){
             } else if (InfoTop(Stack(*Q)) == 'Z'){
                 Posisi(*Q) = 3;
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
         } else if (input == ')'){
             if(InfoTop(Stack(*Q)) == 'X'){
                 Pop(&Stack(*Q),&C);
             } else {
-                Posisi(*Q) = 5;
+                Posisi(*Q) = 6;
             }
 
+        } else if (input == 'i'){
+            if (InfoTop(Stack(*Q)) == 'X' || InfoTop(Stack(*Q)) == 'Z'){
+                Posisi(*Q) = 5;
+            } else {
+                Posisi(*Q) = 6;
+            }
         } else {
-            Posisi(*Q) = 5;
+            Posisi(*Q) = 6;
+        }
+    } else if (Posisi(*Q) == 5){
+        if (input == ')'){
+            if (InfoTop(Stack(*Q)) == 'X'){
+                Pop(&Stack(*Q),&C);
+            } else {
+                Posisi(*Q) = 6;
+            }
+        } else if (input=='+'||input=='-'||input=='*'||input=='/'||input=='^'){
+            if (InfoTop(Stack(*Q)) == 'X'){
+                Posisi(*Q) = 3;
+            } else if (InfoTop(Stack(*Q))=='Z'){
+                Posisi(*Q) = 3;
+            } else {
+                Posisi(*Q) = 6;
+            }
+        } else {
+            Posisi(*Q) = 6;
         }
     }
 }
@@ -194,10 +237,10 @@ boolean validasi (masukan s) {
         karakter = s[i];
         transisi(&Q,karakter);
         //Uncomment next line to check state movement
-        //printf("%d, %c\n",Posisi(Q),InfoTop(Stack(Q)));
+        printf("%d, %c\n",Posisi(Q),InfoTop(Stack(Q)));
     }
 
-    if ((Posisi(Q) == 2 && InfoTop(Stack(Q)) == 'Z') || (Posisi(Q) == 4 && InfoTop(Stack(Q)) == 'Z')){
+    if ((Posisi(Q) == 2 && InfoTop(Stack(Q)) == 'Z') || (Posisi(Q) == 4 && InfoTop(Stack(Q)) == 'Z') || (Posisi(Q) == 5 && InfoTop(Stack(Q)) == 'Z')){
         return true;
     } else {
         return false;
