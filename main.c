@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdbool.h> 
 #include <math.h>
 #include <stdlib.h>
 #include "mesintoken.h"
 #include "stack.h"
 #include "pda.h"
 #include "stackchar.h"
+#include "boolean.h"
 
 /* Kumpulan variabel yang digunakan untuk menghitung ekspresi */
 Token CToken[10005];
 int NToken;
 Stackt tok;
-bool IsValid;
+boolean IsValid;
 
 /* Kumpulan fungsi yang digunakan untuk menghitung ekspresi */
 /* fungsi-fungsi di bawah ini juga merupakan implementasi dari recursive descent parser algorithm yang menggunakan CFG */
@@ -26,7 +26,7 @@ double parse_expression();
             9 / (9 - 3*3) -> tidak valid
             0 ^ 0 -> tidak valid 
 */
-bool cekvalid(double bil1, char opr, double bil2){
+boolean cekvalid(double bil1, char opr, double bil2){
     double test;
     test = pow(bil1,bil2);
     if ((opr == '/') && (bil2 == 0)){
