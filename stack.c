@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Stack.h"
+#include "stack.h"
 
 
 /* ************ Prototype ************ */
