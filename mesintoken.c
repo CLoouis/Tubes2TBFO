@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <complex.h>
 #include "mesintoken.h"
 
 int NToken;
@@ -18,8 +19,14 @@ void SplitToken(char (*s)[], Token (*Arr)[], int *NToken){
             (*NToken)++;
             i++;
          }
+        else if ((*s)[i] == 'i'){
+            (*Arr)[*NToken].tkn = 'b';
+            (*Arr)[*NToken].val = I;
+            (*NToken)++;
+            i++;
+        }
         else {
-            double tmp = 0.00;
+            double complex tmp = 0.00;
 			int dotpos = 0;
             int cnt = 0;
 			while (i < strlen(*s) && (((*s)[i] >= '0' && (*s)[i] <= '9') || (*s)[i] == '.')){
@@ -30,16 +37,31 @@ void SplitToken(char (*s)[], Token (*Arr)[], int *NToken){
                 else tmp = 10 * tmp + ((*s)[i] - '0');
                 i++;
             }
-            if (cnt != 0) {
-                dotpos = i - dotpos - 1;
-                while (dotpos > 0){
-                    tmp /= 10.0;
-                    dotpos--;
+            if (i < strlen(*s) && ((*s)[i] == 'i')) {
+                if (cnt != 0) {
+                    dotpos = i - dotpos - 1;
+                    while (dotpos > 0){
+                        tmp /= 10.0;
+                        dotpos--;
+                    }
                 }
+                (*Arr)[*NToken].tkn = 'b';
+                (*Arr)[*NToken].val = tmp*I;
+                (*NToken)++;
+                i++;
             }
-            (*Arr)[*NToken].tkn = 'b';
-            (*Arr)[*NToken].val = tmp;
-            (*NToken)++;
+            else {
+                 if (cnt != 0) {
+                    dotpos = i - dotpos - 1;
+                    while (dotpos > 0){
+                        tmp /= 10.0;
+                        dotpos--;
+                    }
+                }
+                (*Arr)[*NToken].tkn = 'b';
+                (*Arr)[*NToken].val = tmp;
+                (*NToken)++;
+            }
         } 
     }
 }

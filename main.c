@@ -27,49 +27,57 @@ double complex parse_expression();
             9 / (9 - 3*3) -> tidak valid
             0 ^ 0 -> tidak valid 
 */
-boolean cekvalid(double complex bil1, char opr, double complex bil2){
-    if ((opr == '/') && (creal(bil2) == 0)){
+boolean cekvalid(double complex bil1, char opr, double complex bil2)
+{
+    if ((opr == '/') && (creal(bil2) == 0) && (cimag(bil2) == 0))
+    {
         return false;
     }
-    else if ((creal(bil1) == 0) && (opr == '^') && (creal(bil2) == 0)){
+    else if ((creal(bil1) == 0) && (opr == '^') && (creal(bil2) == 0))
+    {
         return false;
     }
-    else {
+    else
+    {
         return true;
     }
 }
 
 /*implementasi dari parse_item */
-double complex parse_item(){
+double complex parse_item()
+{
     Infotype t, s;
     Popst(&tok, &t);
-    if (t.tkn == 'b') return t.val;
+    if (t.tkn == 'b')
+        return t.val;
     double complex expr;
     expr = parse_expression();
-    Popst(&tok,&s);
+    Popst(&tok, &s);
     return expr;
 }
 
 /*implementasi dari parse_item */
-double complex parse_factor(){
+double complex parse_factor()
+{
     Infotype t;
     Popst(&tok, &t);
-    Pushst(&tok, t);    
+    Pushst(&tok, t);
     double complex sign, test;
     if (t.tkn == '-')
         sign = -1;
-    else sign = 1;
-    // printf("%.1f", creal(sign));
-
-    if (t.tkn == '+' || creal(sign) < 0) 
+    else
+        sign = 1;
+    if (t.tkn == '+' || creal(sign) < 0)
         Popst(&tok, &t);
     double complex result;
     result = parse_item();
     Popst(&tok, &t);
     Pushst(&tok, t);
-    while (t.tkn == '^'){
+    while (t.tkn == '^')
+    {
         Popst(&tok, &t);
-        if (t.tkn != '^') {
+        if (t.tkn != '^')
+        {
             Pushst(&tok, t);
             break;
         }
@@ -77,7 +85,7 @@ double complex parse_factor(){
         rhs = parse_factor();
         if (cekvalid(result, '^', rhs))
         {
-            result = cpow(creal(result), creal(rhs));
+            result = cpow(result, rhs);
         }
         else
         {
@@ -86,33 +94,38 @@ double complex parse_factor(){
         }
         Popst(&tok, &t);
         Pushst(&tok, t);
-    } 
-    return result * creal(sign);
+    }
+    return result * sign;
 }
 
 /*implementasi dari parse_term */
-double complex parse_term(){
+double complex parse_term()
+{
     double complex result;
     result = parse_factor();
     Infotype t;
     Popst(&tok, &t);
     if (t.tkn != '*' && t.tkn != '/')
         Pushst(&tok, t);
-    while (t.tkn == '*' || t.tkn == '/'){
+    while (t.tkn == '*' || t.tkn == '/')
+    {
         double complex rhs;
         rhs = parse_factor();
-        if (cekvalid(result, t.tkn, rhs)) {
+        if (cekvalid(result, t.tkn, rhs))
+        {
             if (t.tkn == '/')
                 result /= rhs;
             else
                 result *= rhs;
         }
-        else {
+        else
+        {
             IsValid = false;
             return 0;
         }
         Popst(&tok, &t);
-        if (t.tkn != '*' && t.tkn != '/'){
+        if (t.tkn != '*' && t.tkn != '/')
+        {
             Pushst(&tok, t);
         }
     }
@@ -120,22 +133,25 @@ double complex parse_term(){
 }
 
 /*implementasi dari parse_expression */
-double complex parse_expression(){
+double complex parse_expression()
+{
     double complex result;
     result = parse_term();
     Infotype t;
     Popst(&tok, &t);
-    if (t.tkn != '+' && t.tkn != '-') 
+    if (t.tkn != '+' && t.tkn != '-')
         Pushst(&tok, t);
-    while (t.tkn == '+' || t.tkn == '-'){
+    while (t.tkn == '+' || t.tkn == '-')
+    {
         double complex rhs;
         rhs = parse_term();
         if (t.tkn == '+')
             result += rhs;
-        else 
+        else
             result -= rhs;
         Popst(&tok, &t);
-        if (t.tkn != '+' && t.tkn != '-'){
+        if (t.tkn != '+' && t.tkn != '-')
+        {
             Pushst(&tok, t);
         }
     }
@@ -196,7 +212,7 @@ int main(){
                 else if (cimag(ans) > 0)
                     printf("Hasil: %.6f+%.6fi\n", creal(ans), cimag(ans));
                 else if (cimag(ans) < 0){
-                    printf("Hasil: %.8f\n", cimag(ans));
+                    // printf("Hasil: %.8f\n", cimag(ans));
                     printf("Hasil: %.6f%.6fi\n", creal(ans), cimag(ans));
                 }
             }
