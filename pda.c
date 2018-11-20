@@ -123,6 +123,13 @@ void transisi(State *Q, char input)
             {
                 Posisi(*Q) = 6;
             }
+        } else if (input == 'i')
+        {
+            if(InfoTop(Stack(*Q)) == 'X' || InfoTop(Stack(*Q)) == 'Z'){
+                Posisi(*Q) = 5;
+            } else {
+                Posisi(*Q) = 6;
+            }
         }
         else
         {
