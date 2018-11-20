@@ -44,7 +44,8 @@ double complex parse_item(){
     Infotype t, s;
     Popst(&tok, &t);
     if (t.tkn == 'b') return t.val;
-    double complex expr = parse_expression();
+    double complex expr;
+    expr = parse_expression();
     Popst(&tok,&s);
     return expr;
 }
@@ -62,7 +63,8 @@ double complex parse_factor(){
 
     if (t.tkn == '+' || creal(sign) < 0) 
         Popst(&tok, &t);
-    double complex result = parse_item();
+    double complex result;
+    result = parse_item();
     Popst(&tok, &t);
     Pushst(&tok, t);
     while (t.tkn == '^'){
@@ -71,7 +73,8 @@ double complex parse_factor(){
             Pushst(&tok, t);
             break;
         }
-        double complex rhs = parse_factor();
+        double complex rhs;
+        rhs = parse_factor();
         if (cekvalid(result, '^', rhs))
         {
             result = cpow(creal(result), creal(rhs));
@@ -89,13 +92,15 @@ double complex parse_factor(){
 
 /*implementasi dari parse_term */
 double complex parse_term(){
-    double complex result = parse_factor();
+    double complex result;
+    result = parse_factor();
     Infotype t;
     Popst(&tok, &t);
     if (t.tkn != '*' && t.tkn != '/')
         Pushst(&tok, t);
     while (t.tkn == '*' || t.tkn == '/'){
-        double complex rhs = parse_factor();
+        double complex rhs;
+        rhs = parse_factor();
         if (cekvalid(result, t.tkn, rhs)) {
             if (t.tkn == '/')
                 result /= rhs;
@@ -116,13 +121,15 @@ double complex parse_term(){
 
 /*implementasi dari parse_expression */
 double complex parse_expression(){
-    double complex result = parse_term();
+    double complex result;
+    result = parse_term();
     Infotype t;
     Popst(&tok, &t);
     if (t.tkn != '+' && t.tkn != '-') 
         Pushst(&tok, t);
     while (t.tkn == '+' || t.tkn == '-'){
-        double complex rhs = parse_term();
+        double complex rhs;
+        rhs = parse_term();
         if (t.tkn == '+')
             result += rhs;
         else 
@@ -139,11 +146,18 @@ double complex parse_expression(){
 void getInput(){
     masukan inputuser;
     gets(inputuser);
-    if (validasi(inputuser)) {    
+    while (!(validasi(inputuser))){
+        printf("Syntax error!\n");
+        masukan inputuser;
+        gets(inputuser);
+    }
+    if (validasi(inputuser))
+    {
         SplitToken(&inputuser, &CToken, &NToken);
         CreateEmptyst(&tok);
-    }else{
-        printf("Syntax error!\n");
+    }
+    else
+    {
         exit(-1);
     }
 }
@@ -151,20 +165,46 @@ void getInput(){
 
 /* main program */
 int main(){
-    getInput();
-    IsValid = true;
-    for (int i = 0; i < NToken; i++){
-        Pushst(&tok, CToken[i]);
+    printf("Selamat datang pada program kalkulator sederhana!\n");
+    printf("Ekspresi yang ingin dihitung (masukan \"exit\" untuk keluar): \n");
+    masukan inputuser;
+    gets(inputuser);
+    while (strcmp("exit", inputuser) != 0){
+        while (!(validasi(inputuser)))
+        {
+            printf("Syntax error!\n");
+            printf("Ekspresi yang ingin dihitung (masukan \"exit\" untuk keluar): \n");
+            gets(inputuser);
+        }
+        if (validasi(inputuser))
+        {
+            NToken = 0;
+            SplitToken(&inputuser, &CToken, &NToken);
+            CreateEmptyst(&tok);
+            IsValid = true;
+            for (int i = 0; i < NToken; i++)
+            {
+                Pushst(&tok, CToken[i]);
+            }
+            tok = Reverse(tok);
+            double complex ans;
+            ans = parse_expression();
+            if (IsValid)
+            {
+                if (floorf(fabs(cimag(ans)) * 1000000)/1000000 == 0)
+                    printf("Hasil: %.6f\n", creal(ans));
+                else if (cimag(ans) > 0)
+                    printf("Hasil: %.6f+%.6fi\n", creal(ans), cimag(ans));
+                else if (cimag(ans) < 0){
+                    printf("Hasil: %.8f\n", cimag(ans));
+                    printf("Hasil: %.6f%.6fi\n", creal(ans), cimag(ans));
+                }
+            }
+            else
+                printf("Math error!\n");
+        }
+        printf("Ekspresi yang ingin dihitung (masukan \"exit\" untuk keluar): \n");
+        gets(inputuser);
     }
-    tok = Reverse(tok);
-    double complex ans = parse_expression();
-    if (IsValid){
-        if (cimag(ans) == 0)
-            printf("%.6f\n", creal(ans));
-        else
-            printf("%.6f + %.6fi\n", creal(ans),cimag(ans));
-    }
-    else 
-        printf("Math error!\n");
     return 0;
 }
